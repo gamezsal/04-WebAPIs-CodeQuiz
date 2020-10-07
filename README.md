@@ -54,6 +54,11 @@ As you proceed in your career as a web developer, you will probably be asked to 
 * [MDN: Client-side storage](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Client-side_storage)
 
 
+* The URL of the deployed application. https://gamezsal.github.io/04-WebAPIs-CodeQuiz/
+
+* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project. https://github.com/gamezsal/04-WebAPIs-CodeQuiz
+
+
 - - -
 © 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
 
