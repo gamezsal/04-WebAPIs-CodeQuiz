@@ -49,20 +49,37 @@ startGame = () => {
 };
 
 newQuestion = () => {
+    if (availQuestions.length === 0 || questionCount > MAX_QUESTIONS) {
+        // End game page
+        return window.location.assign("/end.html")
+    }
     questionCount++;
     var questionIndex = Math.floor(Math.random() * availQuestions.length);
     presentQuestion = availQuestions[questionIndex]
     question.innerText = presentQuestion.question;
 
-    choices.forEach( choice => {
-      var number = choice.dataset["number"];
-      choice.innerText = presentQuestion['choice' + number];
+    choices.forEach(choice => {
+        var number = choice.dataset["number"];
+        choice.innerText = presentQuestion['choice' + number];
     })
 
     availQuestions.splice(questionIndex, 1);
 
     acceptAnswers = true;
 };
+
+choices.forEach(choice => {
+    choice.addEventListener("click", e => {
+        console.log(e.target)
+    if(!acceptAnswers) return;
+
+    acceptAnswers = false;
+    var selectedChoice = e.target;
+    var selectedAnswer = selectedChoice.dataset["number"];
+    newQuestion()
+    })
+})
+
 
 startGame()
 
