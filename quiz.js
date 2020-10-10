@@ -50,7 +50,8 @@ startGame = () => {
 newQuestion = () => {
     if (availQuestions.length === 0 || questionCount > MAX_QUESTIONS) {
         // End game page
-        return window.location.assign("/end.html")
+        localStorage.setItem('mostRecentScore', score);
+        return window.location.assign("endgame.html")
     }
     questionCount++;
     var questionIndex = Math.floor(Math.random() * availQuestions.length);
