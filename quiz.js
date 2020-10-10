@@ -1,3 +1,5 @@
+"use strict";
+var timerDiv = document.getElementById("timer");
 var question = document.getElementById("question");
 var choices = Array.from(document.getElementsByClassName('choice-text'));
 
@@ -39,19 +41,41 @@ var questions = [
 // Contants
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 3;
+const MAX_TIME = 15;
 
-startGame = () => {
+var timeLeft = 0;
+var timerHandle;
+
+var setTime = (seconds) => {
+    if (seconds < 0) {
+        seconds = 0;
+    }
+    timeLeft = seconds;
+    timerDiv.textContent = timeLeft;
+}
+
+var startTimer = () => {
+    setTime(MAX_TIME);
+    timerHandle = setInterval(() => {
+        setTime(timeLeft - 1);
+        if (timeLeft <= 0) {
+            endQuiz();
+        }
+    }, 1000);
+}
+
+var startGame = () => {
     questionCount = 0;
     score = 0;
     availQuestions = [...questions];
     newQuestion();
+    startTimer();
 };
 
-newQuestion = () => {
+var newQuestion = () => {
     if (availQuestions.length === 0 || questionCount > MAX_QUESTIONS) {
         // End game page
-        localStorage.setItem('mostRecentScore', score);
-        return window.location.assign("endgame.html")
+        return endQuiz();
     }
     questionCount++;
     var questionIndex = Math.floor(Math.random() * availQuestions.length);
@@ -68,6 +92,12 @@ newQuestion = () => {
     acceptAnswers = true;
 };
 
+var endQuiz = () => {
+    clearInterval(timerHandle);
+    sessionStorage.setItem('mostRecentScore', score);
+    window.location.assign("endgame.html");
+}
+
 choices.forEach(choice => {
     choice.addEventListener("click", e => {
 
@@ -80,6 +110,9 @@ choices.forEach(choice => {
         var toApply = 'incorrect';
         if (selectedAnswer == presentQuestion.answer) {
             toApply = 'correct';
+            score = score + CORRECT_BONUS
+        } else {
+            setTime(timeLeft - 5);
         }
 
         selectedChoice.parentElement.classList.add(toApply);
@@ -88,8 +121,6 @@ choices.forEach(choice => {
             selectedChoice.parentElement.classList.remove(toApply);
             newQuestion()
         }, 1000);
-
-
     });
 });
 

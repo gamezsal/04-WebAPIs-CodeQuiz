@@ -1,15 +1,28 @@
-var username = document.getElementById('username');
+var usernameInput = document.getElementById('username');
 var saveScoreButton = document.getElementById('saveScoreButton');
 var finalScore = document.getElementById('finalScore');
-var mostRecentScore = localStorage.getItem('mostRecentScore');
-finalScore.innerText = mostRecentScore;
+var score = sessionStorage.getItem('mostRecentScore');
+finalScore.innerText = score;
+
+var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 
 username.addEventListener("keyup", () => {
     saveScoreButton.disabled = !username.value;
 });
 
 
-saveHighScore = e => {
-    console.log("clicked the same button!");
+var saveHighScore = e => {
     e.preventDefault();
+    console.log("clicked the save button!");
+    var username = usernameInput.value;
+    var newHighscore = {
+        username,
+        score
+    };
+    highscores.push(newHighscore);
+    highscores = highscores.sort((a, b) => b.score - a.score);
+    highscores.splice(10);
+    localStorage.setItem("highscores", JSON.stringify(highscores));
 }
+
+saveScoreButton.addEventListener("click", saveHighScore)
