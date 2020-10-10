@@ -1,6 +1,6 @@
 var question = document.getElementById("question");
 var choices = Array.from(document.getElementsByClassName('choice-text'));
-// console.log(choices);
+
 
 var presentQuestion = {};
 var acceptAnswers = false;
@@ -10,28 +10,28 @@ var availQuestions = [];
 
 var questions = [
     {
-        question: "Inside4?",
-        choice1: "by the house",
-        choice2: "by the park",
-        choice3: "by the store",
-        choice4: "by the movies",
+        question: "Who is the best soccer player in the world now?",
+        choice1: "Lionel Messi",
+        choice2: "Cristiano Ronaldo",
+        choice3: "Wayne Rooney",
+        choice4: "Lebron James",
+        answer: 1
+    },
+    {
+        question: "In soccer, an Olympic Goal is a scored shot taken from the?",
+        choice1: "Midfield",
+        choice2: "The penalty box",
+        choice3: "Goal post",
+        choice4: "Corner kick area",
         answer: 4
     },
     {
-        question: "Inside3?",
-        choice1: "by the house",
-        choice2: "by the park",
-        choice3: "by the store",
-        choice4: "by the movies",
-        answer: 3
-    },
-    {
-        question: "Inside1?",
-        choice1: "by the house",
-        choice2: "by the park",
-        choice3: "by the store",
-        choice4: "by the movies",
-        answer: 1
+        question: "Which country was the first to host two World Cups?",
+        choice1: "Argentina",
+        choice2: "Africa",
+        choice3: "China",
+        choice4: "Mexico",
+        answer: 4
     }
 
 ];
@@ -44,7 +44,6 @@ startGame = () => {
     questionCount = 0;
     score = 0;
     availQuestions = [...questions];
-    console.log(availQuestions)
     newQuestion();
 };
 
@@ -70,12 +69,22 @@ newQuestion = () => {
 
 choices.forEach(choice => {
     choice.addEventListener("click", e => {
-        console.log(e.target)
+    
     if(!acceptAnswers) return;
 
     acceptAnswers = false;
     var selectedChoice = e.target;
     var selectedAnswer = selectedChoice.dataset["number"];
+
+    var toApply = 'incorrect';
+    if(selectedAnswer == presentQuestion.answer) {
+        toApply = 'correct';
+    }
+
+    selectedChoice.parentElement.classList.add(toApply)
+
+
+    
     newQuestion()
     })
 })
