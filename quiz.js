@@ -69,25 +69,28 @@ newQuestion = () => {
 
 choices.forEach(choice => {
     choice.addEventListener("click", e => {
-    
-    if(!acceptAnswers) return;
 
-    acceptAnswers = false;
-    var selectedChoice = e.target;
-    var selectedAnswer = selectedChoice.dataset["number"];
+        if (!acceptAnswers) return;
 
-    var toApply = 'incorrect';
-    if(selectedAnswer == presentQuestion.answer) {
-        toApply = 'correct';
-    }
+        acceptAnswers = false;
+        var selectedChoice = e.target;
+        var selectedAnswer = selectedChoice.dataset["number"];
 
-    selectedChoice.parentElement.classList.add(toApply)
+        var toApply = 'incorrect';
+        if (selectedAnswer == presentQuestion.answer) {
+            toApply = 'correct';
+        }
+
+        selectedChoice.parentElement.classList.add(toApply);
+
+        setTimeout(() => {
+            selectedChoice.parentElement.classList.remove(toApply);
+            newQuestion()
+        }, 1000);
 
 
-    
-    newQuestion()
-    })
-})
+    });
+});
 
 
 startGame()
