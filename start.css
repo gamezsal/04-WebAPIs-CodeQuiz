@@ -2,8 +2,8 @@
     display: flex;
     margin-bottom: 0.5rem;
     width: 100%;
-    font-size: 1.8rem;
-    border: 0.1rem solid;
+    font-size: 1.5rem;
+    border: 0.1rem solid rgb(86, 165, 235, 0.25);
     background-color: white;
 }
 
